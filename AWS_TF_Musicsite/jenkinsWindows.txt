@@ -1,0 +1,85 @@
+<powershell>
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = 3072 -bor 768 -bor 192 -bor 48; iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex  
+choco install jre8 -y
+choco install jdk8 -y
+choco install jenkins -y
+choco install git.install -y 
+choco install maven -y 	
+choco install googlechrome -y                                                                     
+$source = 'https://labassets.s3-us-west-2.amazonaws.com/AWS/MusicSite/MSBuild.zip'					
+$destination = 'c:\\msbuild.zip' 				
+$client = new-object System.Net.WebClient 				                    			
+$client.downloadFile($source, $destination) 
+Add-Type -AssemblyName System.IO.Compression.FileSystem  
+[System.IO.Compression.ZipFile]::ExtractToDirectory($destination, 'C:\\MSBUILD')  
+$source = 'https://labassets.s3-us-west-2.amazonaws.com/AZURE/Terraform/v4.6.zip' 	
+$destination = 'c:\\v4.6.zip'  
+$client = new-object System.Net.WebClient  
+$client.downloadFile($source, $destination) 
+Add-Type -AssemblyName System.IO.Compression.FileSystem 
+[System.IO.Compression.ZipFile]::ExtractToDirectory($destination, 'C:\\Program Files (x86)\\Reference Assemblies\\Microsoft\\Framework\\.NETFramework')
+$source = 'https://labassets.s3-us-west-2.amazonaws.com/AZURE/Terraform/v4.7.2.zip' 	
+$destination = 'c:\\v4.7.2.zip'  
+$client = new-object System.Net.WebClient  
+$client.downloadFile($source, $destination) 
+Add-Type -AssemblyName System.IO.Compression.FileSystem 
+[System.IO.Compression.ZipFile]::ExtractToDirectory($destination, 'C:\\Program Files (x86)\\Reference Assemblies\\Microsoft\\Framework\\.NETFramework')
+Stop-Service -Name 'jenkins'
+Remove-Item -Path 'C:\\Program Files (x86)\\Jenkins\\plugins' -Force -Recurse
+Remove-Item -Path 'C:\\Program Files (x86)\\Jenkins\\secrets' -Force -Recurse
+Remove-Item -Path 'C:\\Program Files (x86)\\Jenkins\\users' -Force -Recurse                            
+Remove-Item -Path 'C:\\Program Files (x86)\\Jenkins\\config.xml' -Force -Recurse 
+Remove-Item -Path 'C:\\Program Files (x86)\\Jenkins\\org.sonatype.nexus.ci.config.GlobalNexusConfiguration.xml' -Force -Recurse 
+$source = 'https://labassets.s3-us-west-2.amazonaws.com/AWS/MusicSite/users.zip' 
+$destination = 'C:\\Program Files (x86)\\Jenkins\\users.zip' 
+$client = new-object System.Net.WebClient 
+$client.downloadFile($source, $destination) 
+Add-Type -AssemblyName System.IO.Compression.FileSystem  
+[System.IO.Compression.ZipFile]::ExtractToDirectory($destination, 'C:\\Program Files (x86)\\Jenkins\\') 
+choco install webdeploy -y 
+choco install visualstudio2015testagents -y 
+$source = 'https://labassets.s3-us-west-2.amazonaws.com/AWS/MusicSite/plugins.zip' 
+$destination = 'C:\\Program Files (x86)\\Jenkins\\plugins.zip' 
+$client = new-object System.Net.WebClient 
+$client.downloadFile($source, $destination) 
+Add-Type -AssemblyName System.IO.Compression.FileSystem  
+[System.IO.Compression.ZipFile]::ExtractToDirectory($destination, 'C:\\Program Files (x86)\\Jenkins\\')
+$source = 'https://labassets.s3-us-west-2.amazonaws.com/AWS/MusicSite/secrets.zip' 
+$destination = 'C:\\Program Files (x86)\\Jenkins\\secrets.zip' 
+$client = new-object System.Net.WebClient 
+$client.downloadFile($source, $destination) 
+Add-Type -AssemblyName System.IO.Compression.FileSystem  
+[System.IO.Compression.ZipFile]::ExtractToDirectory($destination, 'C:\\Program Files (x86)\\Jenkins\\') 
+$source = 'https://labassets.s3-us-west-2.amazonaws.com/AWS/MusicSite/MusicSite.zip' 
+$destination = 'c:\\MusicSite.zip' 	
+$client = new-object System.Net.WebClient 
+$client.downloadFile($source, $destination) 
+Add-Type -AssemblyName System.IO.Compression.FileSystem 
+[System.IO.Compression.ZipFile]::ExtractToDirectory($destination, 'C:\\Program Files (x86)\\Jenkins\\jobs\\') 
+$source = 'https://labassets.s3-us-west-2.amazonaws.com/Dependencies/JenkinsWindows/AWS/SeleniumTest.zip' 
+$destination = 'c:\\SeleniumTest.zip' 	
+$client = new-object System.Net.WebClient 
+$client.downloadFile($source, $destination) 
+Add-Type -AssemblyName System.IO.Compression.FileSystem 
+[System.IO.Compression.ZipFile]::ExtractToDirectory($destination, 'C:\\Program Files (x86)\\Jenkins\\jobs\\') 
+$source = 'https://labassets.s3-us-west-2.amazonaws.com/Dependencies/JenkinsWindows/AWS/ZAP.zip'
+$destination = 'c:\\ZAP.zip' 	
+$client = new-object System.Net.WebClient 
+$client.downloadFile($source, $destination) 
+Add-Type -AssemblyName System.IO.Compression.FileSystem 
+[System.IO.Compression.ZipFile]::ExtractToDirectory($destination, 'C:\\Program Files (x86)\\Jenkins\\jobs\\') 
+$WebClient = New-Object System.Net.WebClient
+$WebClient.DownloadFile('https://labassets.s3-us-west-2.amazonaws.com/AWS/MusicSite/credentials.xml','C:\\Program Files (x86)\\Jenkins\\credentials.xml')
+$WebClient.DownloadFile('https://labassets.s3-us-west-2.amazonaws.com/AWS/MusicSite/org.sonatype.nexus.ci.config.GlobalNexusConfiguration.xml','C:\\Program Files (x86)\\Jenkins\\org.sonatype.nexus.ci.config.GlobalNexusConfiguration.xml')
+$WebClient.DownloadFile('https://labassets.s3-us-west-2.amazonaws.com/AWS/MusicSite/org.jenkinsci.plugins.rundeck.RundeckNotifier.xml','C:\\Program Files (x86)\\Jenkins\\org.jenkinsci.plugins.rundeck.RundeckNotifier.xml')
+$WebClient.DownloadFile('https://labassets.s3-us-west-2.amazonaws.com/AWS/MusicSite/hudson.plugins.sonar.SonarGlobalConfiguration.xml','C:\\Program Files (x86)\\Jenkins\\hudson.plugins.sonar.SonarGlobalConfiguration.xml')
+$WebClient.DownloadFile('https://labassets.s3-us-west-2.amazonaws.com/AWS/MusicSite/quality.gates.jenkins.plugin.GlobalConfig.xml','C:\\Program Files (x86)\\Jenkins\\quality.gates.jenkins.plugin.GlobalConfig.xml')
+$WebClient.DownloadFile('https://labassets.s3-us-west-2.amazonaws.com/AWS/MusicSite/com.cloudbees.jenkins.plugins.customtools.CustomTool.xml','C:\\Program Files (x86)\\Jenkins\\com.cloudbees.jenkins.plugins.customtools.CustomTool.xml')
+$WebClient.DownloadFile('https://labassets.s3-us-west-2.amazonaws.com/AWS/MusicSite/hudson.plugins.sonar.MsBuildSQRunnerInstallation.xml','C:\\Program Files (x86)\\Jenkins\\hudson.plugins.sonar.MsBuildSQRunnerInstallation.xml')
+$WebClient.DownloadFile('https://labassets.s3-us-west-2.amazonaws.com/AWS/MusicSite/config.xml','C:\\Program Files (x86)\\Jenkins\\config.xml')
+$filename = "C:\ProgramData\chocolatey\lib\maven\apache-maven-3.6.3\conf\settings.xml";
+(Get-Content $filename).replace('<servers>', '<servers> <server><id>nexus-snapshots</id><username>deployment</username><password>deployment123</password></server>') | Set-Content $filename  
+Restart-Service -Name 'jenkins' 
+choco install nuget.commandline -y 
+choco install phantomjs -y 	
+</powershell>
